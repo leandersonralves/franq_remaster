@@ -3,19 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Struct para definicao de parametros fisicos em determinados estados (pulando, andando).
-/// </summary>
-[System.Serializable]
-public struct PhysicsParameters
-{
-    public float force;
-
-    public float maxSpeed;
-
-    public float MaxSqrtSpeed { get { return maxSpeed * maxSpeed; } }
-}
-
-/// <summary>
 /// Classe para controle da fisica do jogador conforme Input do jogador.
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
@@ -45,12 +32,12 @@ public class PlayerPhysics : MonoBehaviour
     /// <summary>
     /// Parametros fisicos de caminhada no chao.
     /// </summary>
-    public PhysicsParameters walk;
+    public float forceWalk;
 
     /// <summary>
     /// Parametros fisicos de caminhada durante queda.
     /// </summary>
-    public PhysicsParameters walkInFalling;
+    public float forceLateralFalling;
 
     /// <summary>
     /// Forca de Impulso para pulo.
@@ -65,43 +52,41 @@ public class PlayerPhysics : MonoBehaviour
         m_rigidbody2D = GetComponent<Rigidbody2D>();
         m_transform = transform;
     }
+
     // Update is called once per frame
     void FixedUpdate()
     {
+        Vector2 totalForce = Vector2.zero;
+        float horizontal = AutoInput.Horizontal;
         if (IsGrounded)
         {
-            float horizontal = AutoInput.Horizontal;
             if (!Mathf.Approximately(horizontal, 0f))
             {
-                if (m_rigidbody2D.velocity.sqrMagnitude > walk.MaxSqrtSpeed)
-                    m_rigidbody2D.velocity = Vector3.ClampMagnitude(m_rigidbody2D.velocity, walk.maxSpeed);
-
-                m_rigidbody2D.AddForce (Vector2.right * walk.force * horizontal * Time.fixedDeltaTime, ForceMode2D.Impulse);
-            }
-            else if (!Mathf.Approximately(m_rigidbody2D.velocity.x, 0f))
-            {
-                m_rigidbody2D.velocity = new Vector2 (0f , m_rigidbody2D.velocity.y); 
+                totalForce += Vector2.right * forceWalk * horizontal;
             }
         }
         else
         {
-            float horizontal = AutoInput.Horizontal;
             if (!Mathf.Approximately(horizontal, 0f))
             {
-                m_rigidbody2D.AddForce (Vector2.right * walkInFalling.force * horizontal * Time.fixedDeltaTime, ForceMode2D.Impulse);
+                totalForce += Vector2.right * forceLateralFalling * horizontal;
             }
-            if (m_rigidbody2D.velocity.x > walkInFalling.maxSpeed)
-                m_rigidbody2D.velocity = new Vector3(walkInFalling.maxSpeed, m_rigidbody2D.velocity.y);
         }
+
+        m_rigidbody2D.AddForce(totalForce, ForceMode2D.Impulse);
     }
 
-    void Update ()
+
+    /// <summary>
+    /// Update is called every frame, if the MonoBehaviour is enabled.
+    /// </summary>
+    void Update()
     {
         if (IsGrounded)
         {
             if (Input.GetKeyDown(AutoInput.Jump))
             {
-                m_rigidbody2D.AddForce(Vector3.up * impulseJump * Time.fixedDeltaTime, ForceMode2D.Impulse);
+                m_rigidbody2D.AddForce(Vector2.up * impulseJump, ForceMode2D.Impulse);
             }
         }
     }
