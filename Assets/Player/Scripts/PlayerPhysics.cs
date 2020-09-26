@@ -71,7 +71,7 @@ public class PlayerPhysics : MonoBehaviour
             }
         }
 
-        m_animator.SetBool(AnimatorParams.BOOL_MOVING, m_rigidbody2D.velocity.x != 0f);
+        m_animator.SetBool(AnimatorParams.BOOL_MOVING, Mathf.Abs(m_rigidbody2D.velocity.x) > 0.5f);
         m_animator.SetBool(AnimatorParams.BOOL_FALLING, m_rigidbody2D.velocity.y < -3.0f);
         m_rigidbody2D.AddForce(totalForce, ForceMode2D.Impulse);
     }
