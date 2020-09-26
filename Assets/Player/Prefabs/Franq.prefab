@@ -104,9 +104,9 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 40
-  m_LinearDrag: 3
+  m_LinearDrag: 4
   m_AngularDrag: 0.05
-  m_GravityScale: 2
+  m_GravityScale: 3
   m_Material: {fileID: 6200000, guid: 8995e7dc906a6be449fa6c96bf1065e3, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -457,9 +457,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 216f3b860c233e140a4aad9083d51485, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceWalk: 20
+  forceWalk: 30
   forceLateralFalling: 6
   impulseJump: 480
+  m_animator: {fileID: 9500000}
 --- !u!1 &100002
 GameObject:
   m_ObjectHideFlags: 0
@@ -719,7 +720,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.5, y: -0.17736316}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -730,7 +731,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.000100016594, y: 0.0001}
   m_EdgeRadius: 0
 --- !u!50 &5000002
 Rigidbody2D:
