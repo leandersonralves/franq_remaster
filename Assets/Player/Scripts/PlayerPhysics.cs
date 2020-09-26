@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Classe para controle da fisica do jogador conforme Input do jogador.
 /// </summary>
-[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D), typeof(Animator))]
 public class PlayerPhysics : MonoBehaviour
 {
     /// <summary>
@@ -14,35 +14,34 @@ public class PlayerPhysics : MonoBehaviour
     private Rigidbody2D m_rigidbody2D;
 
     /// <summary>
-    /// Transform cache;
-    /// </summary>
-    private Transform m_transform;
-
-    /// <summary>
     /// Tocou o Collider do chao?
     /// </summary>
     private bool isGroundTouched = false;
 
     /// <summary>
-    /// Checa se Franq tocou o chao e esta em repouso.
-    /// </summary>
-    /// <value></value>
-    private bool IsGrounded { get { return isGroundTouched; } }
-
-    /// <summary>
     /// Parametros fisicos de caminhada no chao.
     /// </summary>
-    public float forceWalk;
+    [SerializeField]
+    private float forceWalk;
 
     /// <summary>
     /// Parametros fisicos de caminhada durante queda.
     /// </summary>
-    public float forceLateralFalling;
+    [SerializeField]
+    private float forceLateralFalling;
 
     /// <summary>
     /// Forca de Impulso para pulo.
     /// </summary>
-    public float impulseJump;
+    [SerializeField]
+    private float impulseJump;
+
+    /// <summary>
+    /// Instancia do Animator.
+    /// </summary>
+    [SerializeField]
+    private Animator m_animator;
+
 
     /// <summary>
     /// Awake is called when the script instance is being loaded.
@@ -50,7 +49,6 @@ public class PlayerPhysics : MonoBehaviour
     void Awake()
     {
         m_rigidbody2D = GetComponent<Rigidbody2D>();
-        m_transform = transform;
     }
 
     // Update is called once per frame
@@ -58,7 +56,7 @@ public class PlayerPhysics : MonoBehaviour
     {
         Vector2 totalForce = Vector2.zero;
         float horizontal = AutoInput.Horizontal;
-        if (IsGrounded)
+        if (isGroundTouched)
         {
             if (!Mathf.Approximately(horizontal, 0f))
             {
@@ -73,6 +71,8 @@ public class PlayerPhysics : MonoBehaviour
             }
         }
 
+        m_animator.SetBool(AnimatorParams.BOOL_MOVING, m_rigidbody2D.velocity.x != 0f);
+        m_animator.SetBool(AnimatorParams.BOOL_FALLING, m_rigidbody2D.velocity.y < -3.0f);
         m_rigidbody2D.AddForce(totalForce, ForceMode2D.Impulse);
     }
 
@@ -82,11 +82,12 @@ public class PlayerPhysics : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (IsGrounded)
+        if (isGroundTouched)
         {
             if (Input.GetKeyDown(AutoInput.Jump))
             {
                 m_rigidbody2D.AddForce(Vector2.up * impulseJump, ForceMode2D.Impulse);
+                m_animator.SetTrigger(AnimatorParams.TRIGGER_JUMP);
             }
         }
     }
@@ -101,6 +102,7 @@ public class PlayerPhysics : MonoBehaviour
         if (other.gameObject.CompareTag(Tags.GROUND))
         {
             isGroundTouched = true;
+            m_animator.SetTrigger(AnimatorParams.TRIGGER_GROUND);
         }
     }
 

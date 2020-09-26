@@ -12,3 +12,23 @@ public class Tags
     public const string PLAYER_SHIELD = "PlayerShield";
     public const string PLAYER_PUNCH = "PlayerPuch";
 }
+
+/// <summary>
+/// Classe de constantes para Parametros do Animator.
+/// </summary>
+public class AnimatorParams
+{
+    public const string TRIGGER_JUMP = "Jump";
+    public const string BOOL_FLOATING = "Float";
+    public const string BOOL_MELTING = "Melt";
+    public const string TRIGGER_DASH = "Dash";
+    public const string BOOL_MOVING = "Move";
+    public const string BOOL_SWIMMING = "Swim";
+    public const string IN_WATER = "Water";
+    public const string BOOL_FALLING = "Fall";
+    public const string BOOL_GLIDING = "Glide";
+    public const string TRIGGER_BUBBLING = "Bubble";
+    public const string TRIGGER_GROUND = "InGround";
+    public const string BOOL_DYING = "InDie";
+    public const string BOOL_SHIELD = "Defense";
+}
