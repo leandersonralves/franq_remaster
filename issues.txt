@@ -1,0 +1,9 @@
+Movimentacao Franq.
+Poderes Franq.
+Inimigos, golpes.
+Inimigos fixos.
+Boss.
+Feedback diegético/não-diegético.
+
+Otimizar meshs 2D, TileMap.
+Otimizar collider 2D, Composite Collider.
