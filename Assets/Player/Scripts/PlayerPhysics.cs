@@ -71,9 +71,13 @@ public class PlayerPhysics : MonoBehaviour
             }
         }
 
+        m_rigidbody2D.AddForce(totalForce, ForceMode2D.Impulse);
+
         m_animator.SetBool(AnimatorParams.BOOL_MOVING, Mathf.Abs(m_rigidbody2D.velocity.x) > 0.5f);
         m_animator.SetBool(AnimatorParams.BOOL_FALLING, m_rigidbody2D.velocity.y < -3.0f);
-        m_rigidbody2D.AddForce(totalForce, ForceMode2D.Impulse);
+
+        if (horizontal > 0.01f) transform.localEulerAngles = new Vector3(0f, 0f, 0f);
+        if (horizontal < -0.01f) transform.localEulerAngles = new Vector3(0f, 180f, 0f);
     }
 
 
