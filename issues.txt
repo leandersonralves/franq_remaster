@@ -1,4 +1,4 @@
-Movimentacao Franq.
+#Movimentacao Franq.
 Poderes Franq.
 Inimigos, golpes.
 Inimigos fixos.
