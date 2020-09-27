@@ -382,7 +382,8 @@ PrefabInstance:
       propertyPath: audioClips.Array.data[10]
       value: 
       objectReference: {fileID: 8300000, guid: 301bab61bd375254693c8cb2ccbea0af, type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3101822217065550442, guid: abfe7a7301113f346957fd7e92afd0c9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: abfe7a7301113f346957fd7e92afd0c9, type: 3}
 --- !u!1 &1342424256 stripped
 GameObject:
