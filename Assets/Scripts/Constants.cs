@@ -10,7 +10,7 @@ public class Tags
     public const string ENEMY = "Enemy";
     public const string BUBBLE = "Bubble";
     public const string PLAYER_SHIELD = "PlayerShield";
-    public const string PLAYER_PUNCH = "PlayerPuch";
+    public const string PLAYER_DASH = "PlayerDash";
 }
 
 /// <summary>
@@ -31,4 +31,5 @@ public class AnimatorParams
     public const string TRIGGER_GROUND = "InGround";
     public const string BOOL_DYING = "InDie";
     public const string BOOL_SHIELD = "Defense";
+    public const string TRIGGER_ON_BURST = "OnBurst";
 }

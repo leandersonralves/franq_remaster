@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Classe que controla os Input do Jogador automaticamente conforme aprende a jogar.
@@ -18,7 +16,7 @@ public class AutoInput : MonoBehaviour
         Jump,
         Melt,
         FriendlyBubble,
-        Punch,
+        Dash,
         Defense,
         None
     }
@@ -28,10 +26,16 @@ public class AutoInput : MonoBehaviour
     /// </summary>
     private static Skills currentSkillLearning = Skills.None;
 
+#region  CONSTANTES DO INPUT MANAGER DOS EIXOS
     /// <summary>
     /// String para consulta do eixo conforme os botoes A,D.
     /// </summary>
     private const string HORIZONTAL_AD = "HorizontalAD";
+
+    /// <summary>
+    /// String para consulta do eixo conforme os botoes A,D.
+    /// </summary>
+    private const string VERTICAL_WS = "VerticalWS";
 
     /// <summary>
     /// String para consulta de eixo conforme os botoes de setas.
@@ -39,9 +43,20 @@ public class AutoInput : MonoBehaviour
     private const string HORIZONTAL_ARROW = "HorizontalArrow";
 
     /// <summary>
+    /// String para consulta de eixo conforme os botoes de setas.
+    /// </summary>
+    private const string VERTICAL_ARROW = "VerticalArrow";
+#endregion
+
+    /// <summary>
     /// Atual String usada para consulta do eixo de leitura.
     /// </summary>
     private static string KeyHorizontal = string.Empty;
+
+    /// <summary>
+    /// Atual String usada para consulta do eixo de leitura.
+    /// </summary>
+    private static string KeyVertical = string.Empty;
 
     /// <summary>
     /// Valor atual do eixo Horizontal do Input.
@@ -49,6 +64,13 @@ public class AutoInput : MonoBehaviour
     /// </summary>
     /// <returns>Valor de itnervalo [-1,1] -1 para esquerda, 1 para direita.</returns>
     public static float Horizontal { get { return string.IsNullOrEmpty(KeyHorizontal) ? 0 : Input.GetAxis(KeyHorizontal); } }
+
+    /// <summary>
+    /// Valor atual do eixo Vertical do Input.
+    /// Caso o jogador nao tenha aprendido, retorna 0.
+    /// </summary>
+    /// <returns>Valor de itnervalo [-1,1] -1 para esquerda, 1 para direita.</returns>
+    public static float Vertical { get { return string.IsNullOrEmpty(KeyVertical) ? 0 : Input.GetAxis(KeyVertical); } }
 
     /// <summary>
     /// KeyCode de Pulo.
@@ -63,7 +85,7 @@ public class AutoInput : MonoBehaviour
     /// <summary>
     /// KeyCode de soco.
     /// </summary>
-    public static KeyCode Punch = KeyCode.None;
+    public static KeyCode Dash = KeyCode.None;
 
     /// <summary>
     /// KeyCode de Defesa.
@@ -82,9 +104,10 @@ public class AutoInput : MonoBehaviour
     {
         #if TEST_DEAFULTBUTTONS
         KeyHorizontal = HORIZONTAL_ARROW;
+        KeyVertical = VERTICAL_ARROW;
         Jump = KeyCode.Space;
         Melt = KeyCode.DownArrow;
-        Punch = KeyCode.F;
+        Dash = KeyCode.F;
         Defense = KeyCode.D;
         FriendlyBubble = KeyCode.S;
         #endif
@@ -98,11 +121,17 @@ public class AutoInput : MonoBehaviour
         switch (currentSkillLearning)
         {
             case Skills.Walk:
-                if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow)) 
+                if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
+                {
                     KeyHorizontal = HORIZONTAL_ARROW;
+                    KeyVertical = VERTICAL_ARROW;
+                }
 
                 if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D)) 
+                {
                     KeyHorizontal = HORIZONTAL_AD;
+                    KeyVertical = VERTICAL_WS;
+                }
                 break;
 
             case Skills.Jump:
@@ -120,7 +149,7 @@ public class AutoInput : MonoBehaviour
                 if (KeyAllowed(Event.current.keyCode)) { Melt = Event.current.keyCode; }
                 break;
 
-            case Skills.Punch:
+            case Skills.Dash:
                 if (!Event.current.isKey) { break; }
                 if (KeyAllowed(Event.current.keyCode)) { Jump = Event.current.keyCode; }
                 break;
@@ -146,6 +175,6 @@ public class AutoInput : MonoBehaviour
                 (keyCode > KeyCode.Slash && keyCode < KeyCode.Colon) || //Alphanumerico permitido.
                 (keyCode > KeyCode.Delete && keyCode < KeyCode.KeypadEnter) || //Teclado numerico permitido.
                 keyCode == KeyCode.UpArrow || keyCode == KeyCode.DownArrow || //Setas cima e baixo.
-                (keyCode != Jump && keyCode != Melt && keyCode != Punch && keyCode != Defense && keyCode != FriendlyBubble); //Setas ja em uso.
+                (keyCode != Jump && keyCode != Melt && keyCode != Dash && keyCode != Defense && keyCode != FriendlyBubble); //Setas ja em uso.
     }
 }
