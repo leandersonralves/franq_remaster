@@ -329,7 +329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_animator: {fileID: 9500000}
-  cooldownRequired: 0
+  cooldownRequired: 10
   cooldownManager: {fileID: 4159661962991559711}
   bubble: {fileID: 288061620}
 --- !u!114 &6724203575046990458
