@@ -24,6 +24,7 @@ TagManager:
   - ApplyForce
   - Robo
   - Tentaculos
+  - Skill
   layers:
   - Default
   - TransparentFX

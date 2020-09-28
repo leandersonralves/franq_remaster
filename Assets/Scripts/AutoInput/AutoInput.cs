@@ -10,7 +10,7 @@ public class AutoInput : MonoBehaviour
     /// <summary>
     /// Estado atual da aprendizagem.
     /// </summary>
-    private enum Skills
+    public enum Skills
     {
         Walk,
         Jump,
@@ -24,7 +24,7 @@ public class AutoInput : MonoBehaviour
     /// <summary>
     /// Habilidade atual em aprendizado.
     /// </summary>
-    private static Skills currentSkillLearning = Skills.None;
+    public Skills currentSkillLearning = Skills.None;
 
 #region  CONSTANTES DO INPUT MANAGER DOS EIXOS
     /// <summary>
@@ -113,7 +113,7 @@ public class AutoInput : MonoBehaviour
         #endif
     }
 
-    #if !TEST_DEAFULTBUTTONS
+    #if (!TEST_DEAFULTBUTTONS)
     void Update()
     {
         if (currentSkillLearning == Skills.None) return;
@@ -125,38 +125,60 @@ public class AutoInput : MonoBehaviour
                 {
                     KeyHorizontal = HORIZONTAL_ARROW;
                     KeyVertical = VERTICAL_ARROW;
+                    currentSkillLearning = Skills.None;
                 }
 
                 if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D)) 
                 {
                     KeyHorizontal = HORIZONTAL_AD;
                     KeyVertical = VERTICAL_WS;
+                    currentSkillLearning = Skills.None;
                 }
                 break;
 
             case Skills.Jump:
                 if (!Event.current.isKey) { break; }
-                if (KeyAllowed(Event.current.keyCode)) { Jump = Event.current.keyCode; }
+                if (KeyAllowed(Event.current.keyCode))
+                {
+                    currentSkillLearning = Skills.None;
+                    Jump = Event.current.keyCode;
+                }
                 break;
 
             case Skills.Melt:
                 if (!Event.current.isKey) { break; }
-                if (KeyAllowed(Event.current.keyCode)) { Jump = Event.current.keyCode; }
+                if (KeyAllowed(Event.current.keyCode))
+                {
+                    currentSkillLearning = Skills.None;
+                    Melt = Event.current.keyCode;
+                }
                 break;
 
             case Skills.FriendlyBubble:
                 if (!Event.current.isKey) { break; }
-                if (KeyAllowed(Event.current.keyCode)) { Melt = Event.current.keyCode; }
+                if (KeyAllowed(Event.current.keyCode))
+                {
+                    currentSkillLearning = Skills.None;
+                    FriendlyBubble = Event.current.keyCode;
+                }
                 break;
 
             case Skills.Dash:
                 if (!Event.current.isKey) { break; }
-                if (KeyAllowed(Event.current.keyCode)) { Jump = Event.current.keyCode; }
+                if (KeyAllowed(Event.current.keyCode))
+                {
+                    currentSkillLearning = Skills.None;
+                    Dash = Event.current.keyCode;
+                }
                 break;
 
             case Skills.Defense:
                 if (!Event.current.isKey) { break; }
-                if (KeyAllowed(Event.current.keyCode)) { Jump = Event.current.keyCode; }
+                if (KeyAllowed(Event.current.keyCode))
+                {
+                    currentSkillLearning = Skills.None;
+                    Defense = Event.current.keyCode;
+                }
                 break;
         }
     }

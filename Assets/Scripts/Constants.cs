@@ -11,6 +11,7 @@ public class Tags
     public const string BUBBLE = "Bubble";
     public const string PLAYER_SHIELD = "PlayerShield";
     public const string PLAYER_DASH = "PlayerDash";
+    public const string SKILL_LEARNING = "Skill";
 }
 
 /// <summary>
