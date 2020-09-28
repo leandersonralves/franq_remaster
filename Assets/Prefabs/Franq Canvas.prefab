@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 6032372254542071423}
   - component: {fileID: 6032372254542071422}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Franq Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

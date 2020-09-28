@@ -376,6 +376,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   m_animator: {fileID: 9500000}
+  playerController: {fileID: 139200872}
 --- !u!1 &100002
 GameObject:
   m_ObjectHideFlags: 0
