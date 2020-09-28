@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Classe para controle da Bolha (ativar/desativar) conforme o caso.
+/// Classe para controle do tempo de vida da Bolha (ativar/desativar) conforme o caso.
 /// </summary>
 [RequireComponent(typeof(Animator))]
 public class BubbleController : MonoBehaviour
@@ -27,8 +27,16 @@ public class BubbleController : MonoBehaviour
     /// <returns></returns>
     private Vector3 originLocalPosition = new Vector3(0.3f, 0.85f, 0f);
 
+    /// <summary>
+    /// Instancia do Animator da Bolha.
+    /// </summary>
     [SerializeField]
     private Animator animator;
+
+    /// <summary>
+    /// Instancia do PlayerController para pegar/dar controle.
+    /// </summary>
+    private PlayerController playerController;
 
     private Transform cacheTransform;
 
@@ -38,6 +46,7 @@ public class BubbleController : MonoBehaviour
     void Awake()
     {
         cacheTransform = transform;
+        playerController = GetComponentInParent<PlayerController>();
     }
 
     /// <summary>
@@ -65,9 +74,14 @@ public class BubbleController : MonoBehaviour
     /// <param name="delay">Tempo de atraso para estourar a bolha.</param>
     IEnumerator CounterLife (float delay)
     {
+        playerController.TakeControl();
+
         yield return new WaitForSeconds(delay);
+
         animator.SetTrigger(AnimatorParams.TRIGGER_ON_BURST);
         yield return new WaitForSeconds(TOTAL_ANIM_BURST);
+
+        playerController.GiveControl();
         gameObject.SetActive(false);
     }
 }
