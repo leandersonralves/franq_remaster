@@ -6,7 +6,7 @@ using UnityEngine;
 /// Classe geral para obter informacoes do Player (estado, saude, cooldown)
 /// </summary>
 [RequireComponent(typeof(PlayerPhysics), typeof(Health))]
-public class Player : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     /// <summary>
     /// Estado do Player.
@@ -47,9 +47,9 @@ public class Player : MonoBehaviour
     private Acts currentActs = Acts.None;
 
     /// <summary>
-    /// Instância do Componente de fisica do Jogador.
+    /// Componentes do Player para desativar e ativar.
     /// </summary>
-    private PlayerPhysics playerPhysics;
+    private MonoBehaviour[] playerComponents;
 
     /// <summary>
     /// Instância do Componente de saude do Jogador.
@@ -67,8 +67,7 @@ public class Player : MonoBehaviour
     /// </summary>
     void Awake()
     {
-        playerPhysics = GetComponent<PlayerPhysics>();
-        playerHeath = GetComponent<Health>();
+        playerComponents = gameObject.GetComponents<MonoBehaviour>();
     }
 
     /// <summary>
@@ -79,5 +78,21 @@ public class Player : MonoBehaviour
         // currentActs = currentActs | (Acts)(playerHeath.Value <= 0 ? (1 << (byte)Acts.Health_0) : ~(1 << (byte)Acts.Health_0));
         // currentActs = currentActs | (Acts)(playerPhysics.VelocityY < 0 ? (1 << (byte)Acts.Negative_Y) : ~(1 << (byte)Acts.Negative_Y));
         // currentActs = currentActs | (Acts)(playerPhysics.VelocityX < 0 ? (1 << (byte)Acts.Moving_X) : ~(1 << (byte)Acts.Moving_X));
+    }
+
+    public void TakeControl ()
+    {
+        for (int i = 0; i < playerComponents.Length; i++)
+        {
+            playerComponents[i].enabled = false;
+        }
+    }
+
+    public void GiveControl ()
+    {
+        for (int i = 0; i < playerComponents.Length; i++)
+        {
+            playerComponents[i].enabled = true;
+        }
     }
 }
