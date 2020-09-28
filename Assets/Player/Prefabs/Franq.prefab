@@ -13,13 +13,15 @@ GameObject:
   - component: {fileID: 5000000}
   - component: {fileID: 9500000}
   - component: {fileID: 6100000}
-  - component: {fileID: 1091920772}
   - component: {fileID: 1012680167504256522}
+  - component: {fileID: 139200872}
+  - component: {fileID: 1091920772}
   - component: {fileID: 4159661962991559711}
   - component: {fileID: 1342424257}
   - component: {fileID: 4074451469617074896}
   - component: {fileID: 1342424258}
   - component: {fileID: 6724203575046990458}
+  - component: {fileID: 139200873}
   m_Layer: 15
   m_Name: Franq
   m_TagString: Player
@@ -161,22 +163,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.46559015, y: 1.4158025}
   m_EdgeRadius: 0
---- !u!114 &1091920772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 216f3b860c233e140a4aad9083d51485, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  forceWalk: 30
-  forceLateralFalling: 6
-  impulseJump: 480
-  m_animator: {fileID: 9500000}
 --- !u!82 &1012680167504256522
 AudioSource:
   m_ObjectHideFlags: 0
@@ -273,6 +259,34 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &139200872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6cb57f4b14a00a47942a73a89d27356, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1091920772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 216f3b860c233e140a4aad9083d51485, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  forceWalk: 30
+  forceLateralFalling: 6
+  impulseJump: 480
+  m_animator: {fileID: 9500000}
 --- !u!114 &4159661962991559711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,7 +299,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 528e9783b972ce247915f7e79bffef7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  availableCooldown: 100
+  maxCooldown: 100
+  delayRecovery: 3
 --- !u!114 &1342424257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -347,6 +362,20 @@ MonoBehaviour:
   m_animator: {fileID: 9500000}
   cooldownRequired: 0
   cooldownManager: {fileID: 4159661962991559711}
+--- !u!114 &139200873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8229629f377311145906babc209193f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  m_animator: {fileID: 9500000}
 --- !u!1 &100002
 GameObject:
   m_ObjectHideFlags: 0
@@ -858,7 +887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dd00865a53e2bf4e80862f07bb02c34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
+  animator: {fileID: 288061622}
 --- !u!114 &4469023386794122205
 MonoBehaviour:
   m_ObjectHideFlags: 0

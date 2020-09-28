@@ -9,9 +9,21 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     /// <summary>
-    /// Valor da saude entre [0,100), 0 = sem saude.
+    /// Vida maxima.
     /// </summary>
-    public float Value = 100f;
+    [SerializeField]
+    private float maxHealth = 100f;
+
+    /// <summary>
+    /// Consulta apenas leitura do valor de saude maxima.
+    /// </summary>
+    /// <value></value>
+    public float MaxHeath { get { return maxHealth; } }
+
+    /// <summary>
+    /// Valor da saude atual.
+    /// </summary>
+    public float CurrentHealth { get; private set; }
 
     /// <summary>
     /// Instancia do Animator.
@@ -20,14 +32,22 @@ public class Health : MonoBehaviour
     private Animator m_animator;
 
     /// <summary>
+    /// Awake is called when the script instance is being loaded.
+    /// </summary>
+    void Awake()
+    {
+        CurrentHealth = MaxHeath;
+    }
+
+    /// <summary>
     /// Causa Dano no Player, diminuindo o valor de vida.
     /// </summary>
     /// <param name="damageValue">Valor do Dano causado.</param>
     public void Damage (float damageValue)
     {
-        if (Player.CurrentState != Player.State.Defense)
+        if (PlayerController.CurrentState != PlayerController.State.Defense)
         {
-            Value -= damageValue;
+            CurrentHealth -= damageValue;
         }
     }
 }

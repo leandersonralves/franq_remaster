@@ -7,7 +7,17 @@ namespace Skills
     /// </summary>
     public class Cooldown : MonoBehaviour
     {
+        /// <summary>
+        /// Maxima estamina do Cooldown.
+        /// </summary>
         [SerializeField]
+        private float maxCooldown = 100f;
+
+        /// <summary>
+        /// Valor maximo de Cooldown apenas pra consulta.true
+        /// </summary>
+        public float MaxCooldown { get { return maxCooldown; } }
+
         private float availableCooldown = 100f;
 
         /// <summary>
@@ -25,14 +35,48 @@ namespace Skills
         {
             /// Caso a habilidade use o cooldown sobre o tempo.
             var cd = cooldownSkill.OverTime ? cooldownSkill.CooldownRequired * Time.deltaTime : cooldownSkill.CooldownRequired;
-            Debug.Log(Time.deltaTime);
             if (AvailableCooldown >= cd)
             {
                 AvailableCooldown -= cd;
+                currentDelay = 0f;
                 return true;
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Atraso iniciar a recuperacao do Cooldown.
+        /// </summary>
+        [SerializeField]
+        private float delayRecovery = 3f;
+
+        /// <summary>
+        /// Atraso ja passado para recuperar.
+        /// </summary>
+        private float currentDelay = 0f;
+
+        /// <summary>
+        /// Taxa em segundos de recuperacao do Cooldown.
+        /// </summary>
+        private float recoveryRate = 25f;
+
+        /// <summary>
+        /// Update is called every frame, if the MonoBehaviour is enabled.
+        /// </summary>
+        void Update()
+        {
+            /// Inicia a recuperacao do Cooldown na taxa do recoveryRate apos passar o atraso de delayRecovery.
+            if (availableCooldown < maxCooldown)
+            {
+                currentDelay += Time.deltaTime;
+                if (currentDelay > delayRecovery)
+                {
+                    availableCooldown += Time.deltaTime * recoveryRate;
+                    if (availableCooldown > maxCooldown)
+                        availableCooldown = maxCooldown;
+                }
+            }
         }
     }
 
