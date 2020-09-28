@@ -32,6 +32,12 @@ public class Health : MonoBehaviour
     private Animator m_animator;
 
     /// <summary>
+    /// Instancia do PlayerController.
+    /// </summary>
+    [SerializeField]
+    private PlayerController playerController;
+
+    /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
     void Awake()
@@ -48,6 +54,10 @@ public class Health : MonoBehaviour
         if (PlayerController.CurrentState != PlayerController.State.Defense)
         {
             CurrentHealth -= damageValue;
+            if (CurrentHealth <= 0)
+            {
+                playerController.Die();
+            }
         }
     }
 }

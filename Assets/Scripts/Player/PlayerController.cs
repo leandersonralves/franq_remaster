@@ -1,6 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Classe geral para obter informacoes do Player (estado, saude, cooldown)
@@ -42,19 +43,20 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
+    /// Tempo de atraso para recarregar cena.
+    /// </summary>
+    private const float DELAY_RELOAD_SCENE = 3f;
+
+    /// <summary>
     /// Atuais parametros de outros Components.
     /// </summary>
     private Acts currentActs = Acts.None;
 
     /// <summary>
-    /// Componentes do Player para desativar e ativar.
+    /// Componentes do Player para desativar e ativar quando o controle está sobre outro objeto.
     /// </summary>
+    [SerializeField]
     private MonoBehaviour[] playerComponents;
-
-    /// <summary>
-    /// Instância do Componente de saude do Jogador.
-    /// </summary>
-    private Health playerHeath;
 
     /// <summary>
     /// Estado atual do jogador.
@@ -63,24 +65,32 @@ public class PlayerController : MonoBehaviour
     public static State CurrentState { get; private set; }
 
     /// <summary>
-    /// Awake is called when the script instance is being loaded.
+    /// Instancia do Animator.
     /// </summary>
-    void Awake()
+    public Animator animator;
+
+    /// <summary>
+    /// Inicia processo de Morte.
+    /// </summary>
+    public void Die()
     {
-        playerComponents = gameObject.GetComponents<MonoBehaviour>();
+        animator.SetBool(AnimatorParams.BOOL_DYING, true);
+        StartCoroutine(ReloadScene());
     }
 
     /// <summary>
-    /// Update is called every frame, if the MonoBehaviour is enabled.
+    /// Recarrega a cena atual com atraso.
     /// </summary>
-    void Update()
+    /// <returns></returns>
+    IEnumerator ReloadScene()
     {
-        // currentActs = currentActs | (Acts)(playerHeath.Value <= 0 ? (1 << (byte)Acts.Health_0) : ~(1 << (byte)Acts.Health_0));
-        // currentActs = currentActs | (Acts)(playerPhysics.VelocityY < 0 ? (1 << (byte)Acts.Negative_Y) : ~(1 << (byte)Acts.Negative_Y));
-        // currentActs = currentActs | (Acts)(playerPhysics.VelocityX < 0 ? (1 << (byte)Acts.Moving_X) : ~(1 << (byte)Acts.Moving_X));
+        yield return new WaitForSeconds(DELAY_RELOAD_SCENE);
+        SceneManager.LoadScene(
+            SceneManager.GetActiveScene().name
+        );
     }
 
-    public void TakeControl ()
+    public void TakeControl()
     {
         for (int i = 0; i < playerComponents.Length; i++)
         {
@@ -88,7 +98,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void GiveControl ()
+    public void GiveControl()
     {
         for (int i = 0; i < playerComponents.Length; i++)
         {
