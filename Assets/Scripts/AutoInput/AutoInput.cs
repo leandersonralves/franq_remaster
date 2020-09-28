@@ -114,7 +114,7 @@ public class AutoInput : MonoBehaviour
     }
 
     #if (!TEST_DEAFULTBUTTONS)
-    void Update()
+    void OnGUI()
     {
         if (currentSkillLearning == Skills.None) return;
 
@@ -137,11 +137,12 @@ public class AutoInput : MonoBehaviour
                 break;
 
             case Skills.Jump:
-                if (!Event.current.isKey) { break; }
-                if (KeyAllowed(Event.current.keyCode))
+                Event c = Event.current;
+                if (c == null || !c.isKey) { break; }
+                if (KeyAllowed(c.keyCode))
                 {
                     currentSkillLearning = Skills.None;
-                    Jump = Event.current.keyCode;
+                    Jump = c.keyCode;
                 }
                 break;
 
@@ -192,11 +193,11 @@ public class AutoInput : MonoBehaviour
     /// <returns></returns>
     private bool KeyAllowed (KeyCode keyCode)
     {
-        return  (keyCode > KeyCode.BackQuote && keyCode < KeyCode.LeftCurlyBracket) || //Alphabeto permitido.
+        return  ((keyCode > KeyCode.BackQuote && keyCode < KeyCode.LeftCurlyBracket) || //Alphabeto permitido.
                 (keyCode > KeyCode.ScrollLock && keyCode < KeyCode.RightCommand) || //Ctrl, Alt e Shift permitido.
                 (keyCode > KeyCode.Slash && keyCode < KeyCode.Colon) || //Alphanumerico permitido.
                 (keyCode > KeyCode.Delete && keyCode < KeyCode.KeypadEnter) || //Teclado numerico permitido.
-                keyCode == KeyCode.UpArrow || keyCode == KeyCode.DownArrow || //Setas cima e baixo.
+                keyCode == KeyCode.Space) &&
                 (keyCode != Jump && keyCode != Melt && keyCode != Dash && keyCode != Defense && keyCode != FriendlyBubble); //Setas ja em uso.
     }
 }

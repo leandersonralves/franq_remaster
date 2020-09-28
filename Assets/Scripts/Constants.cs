@@ -15,6 +15,15 @@ public class Tags
 }
 
 /// <summary>
+/// Classe de constantes para Layers.
+/// </summary>
+public class Layer
+{
+    public const string FRANQ = "Franq";
+    public const string FRANQ_MELT = "FranqAgachado";
+}
+
+/// <summary>
 /// Classe de constantes para Parametros do Animator.
 /// </summary>
 public class AnimatorParams

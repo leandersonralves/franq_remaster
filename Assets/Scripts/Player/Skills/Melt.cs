@@ -32,10 +32,12 @@ namespace Skills
             if (Input.GetKey(AutoInput.Melt) && cooldownManager.Use(this as ICooldown))
             {
                 m_animator.SetBool(AnimatorParams.BOOL_MELTING, true);
+                gameObject.layer = LayerMask.NameToLayer(Layer.FRANQ_MELT);
             }
             else
             {
                 m_animator.SetBool(AnimatorParams.BOOL_MELTING, false);
+                gameObject.layer = LayerMask.NameToLayer(Layer.FRANQ);
             }
         }
     }
